@@ -1,13 +1,21 @@
 import * as React from "react";
 import {observer} from "mobx-react";
 import {Game} from "../Game";
-import {Square} from "./Square";
+import {BoardSquare} from "./BoardSquare";
 import {Knight} from "./Knight";
+import {DragDropContext, Backend, ContextComponentClass} from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 export interface BoardProps {
   game: Game;
 }
 
+// for decorator...
+// declare function DragDropContext<P>(
+//     backend: Backend
+// ): <P, TFunction extends ContextComponentClass<P | void>>(componentClass: TFunction) => TFunction;
+
+@DragDropContext(HTML5Backend)
 @observer
 export class Board extends React.Component<BoardProps, {}> {
   render() {
@@ -31,23 +39,22 @@ export class Board extends React.Component<BoardProps, {}> {
   renderSquare(i: number) {
     const x = i % 8;
     const y = Math.floor(i / 8);
-    const black = (x + y) % 2 === 1;
-
-    const [knightX, knightY] = this.props.game.knightPosition;
-    const piece = (x === knightX && y === knightY) ?
-      <Knight /> :
-      null;
-
     return (
       <div key={i}
-           style={{ width: '12.5%', height: '12.5%' }}
-           onClick={() => this.handleSquareClick(x, y)}
-           >
-        <Square black={black}>
-          {piece}
-        </Square>
+           style={{ width: '12.5%', height: '12.5%' }}>
+        <BoardSquare x={x}
+                     y={y}>
+          {this.renderPiece(x, y)}
+        </BoardSquare>
       </div>
     );
+  }
+
+  renderPiece(x: number, y: number) {
+    const [knightX, knightY] = this.props.knightPosition;
+    if (x === knightX && y === knightY) {
+      return <Knight />;
+    }
   }
 
   private handleSquareClick(toX: number, toY: number) {
