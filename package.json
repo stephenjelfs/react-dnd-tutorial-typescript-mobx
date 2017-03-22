@@ -9,7 +9,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/react": "^15.0.16",
-    "@types/react-dnd": "^2.0.32",
     "@types/react-dnd-html5-backend": "^2.1.7",
     "@types/react-dom": "^0.14.23",
     "mobx": "^3.1.7",

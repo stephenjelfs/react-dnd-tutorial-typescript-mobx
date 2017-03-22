@@ -9,6 +9,7 @@
     "jsx": "react"
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*",
+    "./typings-custom/**/*"
   ]
 }
