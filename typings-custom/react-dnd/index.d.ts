@@ -33,7 +33,7 @@ declare module __ReactDnd {
     export function DragLayer<P>(
         collect: DragLayerCollector,
         options?: DndOptions<P>
-    ): (componentClass: React.ComponentClass<P> | React.StatelessComponent<P>) => React.ComponentClass<P>;
+    ): <P, TFunction extends React.ComponentClass<P | void>>(componentClass: TFunction) => TFunction;
 
     type DragSourceCollector = (connect: DragSourceConnector, monitor: DragSourceMonitor) => Object;
     type DropTargetCollector = (connect: DropTargetConnector, monitor: DropTargetMonitor) => Object;
